@@ -1,41 +1,128 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'homepage.dart';
+// import 'dart:ui';
+// import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      home: IntroScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class IntroScreen extends StatefulWidget {
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen>
+    with SingleTickerProviderStateMixin {
+  static var myNewFont = GoogleFonts.pressStart2p(
+      textStyle: TextStyle(color: Colors.black, letterSpacing: 3));
+  static var myNewFontWhite = GoogleFonts.pressStart2p(
+      textStyle:
+          TextStyle(color: Colors.white, letterSpacing: 3, fontSize: 15));
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
-        ),
-      ),
+    final color = Colors.white;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+          backgroundColor: Color(0xff025872),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 120.0),
+                    child: Container(
+                      child: Text(
+                        "TIC TAC TOE",
+                        style: myNewFontWhite.copyWith(fontSize: 30),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    child: AvatarGlow(
+                      endRadius: 140,
+                      duration: Duration(seconds: 2),
+                      glowColor: Colors.white,
+                      repeat: true,
+                      repeatPauseDuration: Duration(seconds: 1),
+                      startDelay: Duration(seconds: 1),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              style: BorderStyle.none,
+                            ),
+                            shape: BoxShape.circle),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey[900],
+                          child: Container(
+                            child: Image.asset(
+                              'lib/images/tictactoelogo.png',
+                              color: Colors.white,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                          radius: 80.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 80.0),
+                    child: Container(
+                      child: Text(
+                        "@CREATEDBYVISHNU",
+                        style: myNewFontWhite.copyWith(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //on pressing Play Game -move to next page code
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 40, right: 40, bottom: 60),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        padding: EdgeInsets.all(30),
+                        color: Colors.white,
+                        child: Center(
+                          child: Text(
+                            'PLAY GAME',
+                            style: myNewFont,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }
